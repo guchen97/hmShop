@@ -15,7 +15,7 @@
 
     <view class="commend">
       <view class="commend-title">推荐商品</view>
-      <goods-list :goods="goodsList"></goods-list>
+      <goods-list :goods="goodsList" @clickItem="onClickGoodsItem"></goods-list>
     </view>
 	</view>
 </template>
@@ -63,6 +63,9 @@ import goodsList from '../../components/goodsLIst/goodsList'
       async	getGoodsList(){
         const { goods } = await this.$api.getGoodsList({pagenum: 1, pagesize: 10})
         this.goodsList = goods
+      },
+      onClickGoodsItem(id){
+        uni.navigateTo({url: '/pages/goodsDetail/goodsDetail?id='+id})
       }
 		},
     components: { goodsList }
@@ -72,7 +75,6 @@ import goodsList from '../../components/goodsLIst/goodsList'
 <style lang="scss" scoped>
   .pages{
     swiper{
-      width: 100%;
       height: 340rpx;
       image{
         width: 100%;

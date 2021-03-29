@@ -60,6 +60,14 @@
         }
           
       }
+        ,{
+            "path" : "pages/goodsDetail/goodsDetail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "商品详情"
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

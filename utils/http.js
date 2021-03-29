@@ -6,9 +6,7 @@ export default (url, parms, type) => {
       data: parms || {},
       method: type || 'GET',
       success: res => {
-        if(res){
-          if(res.statusCode !== 200) uni.showToast({title: '获取数据失败'})
-        }
+        if(res.statusCode !== 200) uni.showToast({title: '获取数据失败'})
         resolve(res.data.message)
       },
       fail: err => {

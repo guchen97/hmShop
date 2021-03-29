@@ -1,6 +1,6 @@
 <template>
 	<view class="pages">
-    <goods-list :goods="goodsList"></goods-list>
+    <goods-list :goods="goodsList" @clickItem="onClickGoodsItem"></goods-list>
     <view v-if="hasMoreData" class="nodata">----- 我是有底线的 -----</view>
   </view>
 </template>
@@ -24,9 +24,8 @@ import goodsList from "../../components/goodsLIst/goodsList";
       this.goodsList = []
       this.hasMoreData = false
       setTimeout(() => {
-        this.getGoodsList()
-      }, 1000);
-      uni.stopPullDownRefresh()
+        this.getGoodsList('isPullDown')
+      }, 1000)
     },
     onReachBottom(){
       if(this.goodsList.length == this.total) return this.hasMoreData = true
@@ -34,10 +33,14 @@ import goodsList from "../../components/goodsLIst/goodsList";
       this.getGoodsList()
     },
 		methods: {
-			async	getGoodsList(){
+			async	getGoodsList(isPullDown){
         const { goods, total } = await this.$api.getGoodsList({query: '创维', pagenum: this.pagenum, pagesize: 10})
         this.goodsList = [...this.goodsList, ...goods]
         this.total = total
+        isPullDown === 'isPullDown' && uni.stopPullDownRefresh()
+      },
+      onClickGoodsItem(id){
+        uni.navigateTo({url: '/pages/goodsDetail/goodsDetail?goodsId='+id})
       }
 		},
     components: { goodsList }
@@ -45,9 +48,11 @@ import goodsList from "../../components/goodsLIst/goodsList";
 </script>
 
 <style lang="scss" scoped>
+page{
+  background-color: #eee;
+}
   .pages{
     padding-bottom: 20rpx;
-    background-color: #eee;
     .nodata{
       color: #666;
       font-size: 28rpx;
